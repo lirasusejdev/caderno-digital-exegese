@@ -3,63 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Diário de Exegese - EDB</title>
+    <title>EDB - Caderno de Exegese</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background-color: #f4f4f4; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h1, h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        label { font-weight: bold; display: block; margin-top: 15px; color: #e67e22; }
-        textarea, input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 20px; font-size: 16px; }
-        button:hover { background: #219150; }
-        .warning { font-size: 0.9em; color: #7f8c8d; font-style: italic; }
+        :root {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #b0b0b0;
+            --border: #333;
+            --accent-p1: #3498db; /* Azul Observação */
+            --accent-p2: #f1c40f; /* Amarelo Interpretação */
+            --accent-tools: #9b59b6; /* Roxo Ferramentas */
+            --accent-p3: #27ae60; /* Verde Aplicação */
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            line-height: 1.6; 
+            max-width: 850px; 
+            margin: auto; 
+            padding: 20px; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+        }
+
+        h1 { text-align: center; color: #fff; margin-bottom: 30px; font-weight: 300; }
+
+        .card { 
+            background: var(--bg-card); 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            margin-bottom: 25px; 
+            border-left: 6px solid #444;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-2px); }
+        .p1 { border-left-color: var(--accent-p1); }
+        .p2 { border-left-color: var(--accent-p2); }
+        .tools { border-left-color: var(--accent-tools); }
+        .p3 { border-left-color: var(--accent-p3); }
+
+        h2 { margin-top: 0; font-size: 1.2em; color: #fff; display: flex; align-items: center; gap: 10px; }
+        
+        .instrucao { 
+            font-size: 0.85em; 
+            color: var(--text-muted); 
+            margin-bottom: 12px; 
+            display: block;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        input, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            background: #252525; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            color: #fff; 
+            font-size: 1em; 
+            box-sizing: border-box;
+        }
+
+        textarea:focus { border-color: var(--accent-p1); outline: none; background: #2a2a2a; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        
+        button { 
+            flex: 1;
+            padding: 15px; 
+            border-radius: 8px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1em;
+            transition: opacity 0.3s;
+        }
+
+        .btn-save { background: #444; color: white; }
+        .btn-download { background: var(--accent-p3); color: white; }
+        button:hover { opacity: 0.8; }
+
+        .footer { text-align: center; font-size: 0.8em; color: var(--text-muted); margin-top: 40px; }
     </style>
 </head>
 <body>
 
-    <h1>📓 Método de Estudo Bíblico (Exegese)</h1>
-    <p class="warning">Baseado no Intensivo "Como Estudar a Bíblia" - FHOP</p>
+    <h1>📓 Caderno de Exegese</h1>
 
     <div class="card">
-        <h2>Passo Inicial: O Texto</h2>
-        <label>Referência Bíblica (Ex: Filipenses 4:13):</label>
-        <input type="text" id="ref" placeholder="Qual livro e capítulo você vai estudar?">
+        <h2>📍 Referência Bíblica</h2>
+        <input type="text" id="ref" placeholder="Ex: Filipenses 4:10-13">
     </div>
 
-    <div class="card">
-        <h2>Pilar 1: Observação 🔍</h2>
-        <p class="warning">"O que eu vejo no texto?" (Fatos, verbos, repetições)</p>
-        <textarea id="pilar1" rows="5" placeholder="Liste o que você vê sem interpretar ainda..."></textarea>
+    <div class="card p1">
+        <h2>1. Observação 🔍</h2>
+        <span class="instrucao">Pergunta da Apostila: "O que eu vejo no texto?" [cite: 69]</span>
+        <textarea id="p1" rows="5" placeholder="• Liste fatos, verbos e repetições.&#10;• O que Deus revela de si mesmo aqui?&#10;• Evite interpretar agora!"></textarea>
     </div>
 
-    <div class="card">
-        <h2>Pilar 2: Interpretação 💡</h2>
-        <p class="warning">"O que isso significou LÁ para eles?" (Intenção autoral e contexto histórico)</p>
-        <textarea id="pilar2" rows="5" placeholder="Qual foi a intenção do autor original?"></textarea>
+    <div class="card p2">
+        <h2>2. Interpretação 💡</h2>
+        <span class="instrucao">Pergunta da Apostila: "O que isso significou LÁ para eles?" [cite: 70]</span>
+        <textarea id="p2" rows="5" placeholder="• Qual a intenção do autor original? [cite: 37]&#10;• Qual o contexto histórico?&#10;• O que os destinatários originais ouviram? [cite: 36]"></textarea>
     </div>
 
-    <div class="card">
-        <h2>Pilar 3: Aplicação 🌱</h2>
-        <p class="warning">"O que isso significa AQUI para mim?" (Mudança de mente e prática)</p>
-        <textarea id="pilar3" rows="5" placeholder="Como essa verdade se aplica à minha vida hoje?"></textarea>
+    <div class="card tools">
+        <h2>3. Caixa de Ferramentas 🛠️</h2>
+        <span class="instrucao">Apoio: Grego/Hebraico e Comentários (último passo) [cite: 55]</span>
+        <textarea id="tools" rows="4" placeholder="• Notas de dicionários bíblicos.&#10;• Ênfases do original (grego/hebraico). [cite: 51]&#10;• Insights de comentários exegéticos. [cite: 55]"></textarea>
     </div>
 
-    <button onclick="salvarEstudo()">Baixar PDF do Estudo</button>
+    <div class="card p3">
+        <h2>4. Aplicação 🌱</h2>
+        <span class="instrucao">Pergunta da Apostila: "O que isso significa AQUI para mim?" [cite: 71]</span>
+        <textarea id="p3" rows="5" placeholder="• Como a verdade original se aplica hoje?&#10;• O que não pode significar (limite da exegese)? [cite: 49]&#10;• Resposta prática e pessoal."></textarea>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-save" onclick="salvarLocal()">💾 Salvar Rascunho</button>
+        <button class="btn-download" onclick="baixarTxt()">📥 Baixar Estudo</button>
+    </div>
+
+    <div class="footer">
+        Baseado no Intensivo EDB - FHOP [cite: 4]
+    </div>
 
     <script>
-        function salvarEstudo() {
-            const ref = document.getElementById('ref').value;
-            const p1 = document.getElementById('pilar1').value;
-            const p2 = document.getElementById('pilar2').value;
-            const p3 = document.getElementById('pilar3').value;
-            
-            const conteudo = `ESTUDO BÍBLICO: ${ref}\n\n1. OBSERVAÇÃO:\n${p1}\n\n2. INTERPRETAÇÃO:\n${p2}\n\n3. APLICAÇÃO:\n${p3}`;
-            
-            const blob = new Blob([conteudo], { type: "text/plain" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `Estudo_${ref}.txt`;
-            link.click();
+        function salvarLocal() {
+            const dados = {
+                ref: document.getElementById('ref').value,
+                p1: document.getElementById('p1').value,
+                p2: document.getElementById('p2').value,
+                tools: document.getElementById('tools').value,
+                p3: document.getElementById('p3').value
+            };
+            localStorage.setItem('meu_estudo_fhop', JSON.stringify(dados));
+            alert("Rascunho salvo no seu navegador!");
+        }
+
+        window.onload = function() {
+            const salvo = localStorage.getItem('meu_estudo_fhop');
+            if (salvo) {
+                const d = JSON.parse(salvo);
+                document.getElementById('ref').value = d.ref;
+                document.getElementById('p1').value = d.p1;
+                document.getElementById('p2').value = d.p2;
+                document.getElementById('tools').value = d.tools;
+                document.getElementById('p3').value = d.p3;
+            }
+        };
+
+        function baixarTxt() {
+            const ref = document.getElementById('ref').value || 'estudo';
+            const texto = `ESTUDO BÍBLICO (MÉTODO EDB)\nRef: ${ref}\n\n1. OBSERVAÇÃO:\n${document.getElementById('p1').value}\n\n2. INTERPRETAÇÃO:\n${document.getElementById('p2').value}\n\n3. FERRAMENTAS:\n${document.getElementById('tools').value}\n\n4. APLICAÇÃO:\n${document.getElementById('p3').value}`;
+            const blob = new Blob([texto], { type: "text/plain" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `${ref}.txt`;
+            a.click();
         }
     </script>
 </body>
