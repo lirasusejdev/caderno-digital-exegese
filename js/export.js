@@ -12,5 +12,15 @@ const exporter = {
         const t = `ESTUDO: ${ref}\n\nOBS:\n${document.getElementById('obs').value}\n\nINT:\n${document.getElementById('int').value}\n\nFER:\n${document.getElementById('fer').value}\n\nAPL:\n${document.getElementById('apl').value}`;
         const b = new Blob([t], {type:'text/plain'});
         const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `EDB_${ref}.txt`; a.click();
+    },
+
+    downloadApostila() {
+        // Caminho para o arquivo da apostila no seu projeto
+        const caminhoArquivo = 'assets/INTENSIVO_COMO_ESTUDAR_A_BIBLIA.pdf';
+        
+        const link = document.createElement('a');
+        link.href = caminhoArquivo;
+        link.download = 'Apostila_EDB_FHOP.pdf';
+        link.click();
     }
 };
