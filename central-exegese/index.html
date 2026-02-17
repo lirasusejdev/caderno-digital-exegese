@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDB - Central de Exegese</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<header id="header-title">Caderno de Estudo</header>
+
+<main>
+    <section id="p-caderno" class="page active">
+        <div id="pdf-area">
+            <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
+            
+            <div class="card p1">
+                <div class="badge">Passo 1</div>
+                <h3>Observação 🔍</h3>
+                <textarea id="obs" rows="4" placeholder="O que o texto diz?"></textarea>
+            </div>
+
+            <div class="card p2">
+                <div class="badge">Passo 2</div>
+                <h3>Interpretação 💡</h3>
+                <textarea id="int" rows="4" placeholder="O que significou para eles?"></textarea>
+            </div>
+
+            <div class="card p3">
+                <div class="badge">Extra</div>
+                <h3>Ferramentas 🛠️</h3>
+                <textarea id="fer" rows="3" placeholder="Comentários e Originais..."></textarea>
+            </div>
+
+            <div class="card p4">
+                <div class="badge">Passo 3</div>
+                <h3>Aplicação 🌱</h3>
+                <textarea id="apl" rows="4" placeholder="O que significa para mim?"></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-save" onclick="storage.salvarEstudo()">💾 Registar no Histórico</button>
+        <div class="export-group">
+            <button class="btn btn-pdf" onclick="exporter.gerarPDF()">📄 PDF</button>
+            <button class="btn btn-txt" onclick="exporter.gerarTXT()">📝 TXT</button>
+        </div>
+    </section>
+
+    <section id="p-teoria" class="page">
+        <input type="text" id="search" class="search-box" placeholder="🔎 Pesquisar na apostila..." onkeyup="app.filtrarTeoria()">
+        <div id="lista-teoria">
+            </div>
+    </section>
+
+    <section id="p-check" class="page">
+        <h2>Checklist de Qualidade</h2>
+        <div class="card" id="checklist-container">
+            </div>
+        <button class="btn btn-danger" onclick="app.limparCampos()">🗑️ Limpar Caderno</button>
+    </section>
+
+    <section id="p-hist" class="page">
+        <h2>Estudos Guardados</h2>
+        <div id="lista-hist"></div>
+    </section>
+</main>
+
+<nav>
+    <div class="nav-item active" onclick="app.switchPage('p-caderno', this, 'Caderno de Estudo')"><span>📝</span>Caderno</div>
+    <div class="nav-item" onclick="app.switchPage('p-teoria', this, 'Biblioteca')"><span>📚</span>Teoria</div>
+    <div class="nav-item" onclick="app.switchPage('p-check', this, 'Checklist')"><span>✅</span>Checklist</div>
+    <div class="nav-item" onclick="app.switchPage('p-hist', this, 'Histórico')"><span>🕒</span>Histórico</div>
+</nav>
+
+<script src="js/app.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/export.js"></script>
+</body>
+</html>
