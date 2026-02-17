@@ -3,139 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Central de Exegese - EDB</title>
+    <title>EDB - Central de Exegese</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
             --bg: #000000; --card: #161618; --accent: #0A84FF;
             --text: #ffffff; --muted: #8E8E93; --border: #2C2C2E;
-            --success: #27ae60; --danger: #e74c3c;
+            --success: #27ae60; --danger: #ff453a;
         }
         
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            padding-bottom: 80px; 
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: var(--bg); color: var(--text); margin: 0; padding-bottom: 90px;
         }
 
         header { 
-            padding: 20px; 
-            border-bottom: 1px solid var(--border); 
-            background: rgba(0,0,0,0.8); 
-            backdrop-filter: blur(10px); 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            text-align: center; 
-            font-weight: bold;
+            padding: 20px; border-bottom: 1px solid var(--border); 
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100; text-align: center; font-weight: bold;
         }
 
-        /* Navegação Mobile */
+        /* Nav Inferior */
         nav { 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            background: var(--card); 
-            border-top: 1px solid var(--border); 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 12px 0; 
-            z-index: 1000; 
+            position: fixed; bottom: 0; width: 100%; background: var(--card); 
+            border-top: 1px solid var(--border); display: flex; 
+            justify-content: space-around; padding: 12px 0; z-index: 1000; 
         }
         .nav-item { 
-            color: var(--muted); 
-            text-decoration: none; 
-            font-size: 11px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            cursor: pointer; 
-            transition: 0.3s;
+            color: var(--muted); text-decoration: none; font-size: 11px; 
+            display: flex; flex-direction: column; align-items: center; cursor: pointer; 
         }
         .nav-item.active { color: var(--accent); }
-        .nav-item span { font-size: 20px; margin-bottom: 4px; }
+        .nav-item span { font-size: 22px; margin-bottom: 4px; }
 
-        /* Estrutura de Páginas */
-        .page { display: none; padding: 20px; animation: fadeIn 0.3s ease; }
+        /* Conteúdo */
+        .page { display: none; padding: 20px; animation: fadeIn 0.2s ease; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Componentes */
-        .card { 
-            background: var(--card); 
-            border-radius: 14px; 
-            padding: 18px; 
-            margin-bottom: 15px; 
-            border: 1px solid var(--border); 
-        }
-        .card h2, .card h3 { margin-top: 0; color: var(--accent); }
+        /* Estilos de Card e Inputs */
+        .card { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border); }
+        h2, h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
+        .badge { background: #323234; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
         
-        .badge { 
-            background: #323234; 
-            padding: 4px 10px; 
-            border-radius: 6px; 
-            font-size: 10px; 
-            font-weight: bold; 
-            margin-bottom: 10px; 
-            display: inline-block;
-            text-transform: uppercase;
-        }
-
         textarea, input { 
-            width: 100%; 
-            background: #000; 
-            border: 1px solid var(--border); 
-            border-radius: 10px; 
-            color: #fff; 
-            padding: 14px; 
-            margin-top: 10px; 
-            font-size: 16px; 
-            box-sizing: border-box;
-            outline: none;
+            width: 100%; background: #000; border: 1px solid var(--border); 
+            border-radius: 10px; color: #fff; padding: 14px; margin-top: 10px; 
+            font-size: 16px; box-sizing: border-box; outline: none;
         }
-        textarea:focus { border-color: var(--accent); }
 
-        .search-box { 
-            background: #1C1C1E; 
-            border: none; 
-            margin-bottom: 20px; 
-        }
+        .search-box { background: #1C1C1E; border: none; margin-bottom: 20px; }
 
         /* Botões */
-        .btn { 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 12px; 
-            border: none; 
-            font-weight: bold; 
-            font-size: 16px; 
-            margin-top: 15px; 
-            cursor: pointer; 
-            transition: 0.2s;
-        }
-        .btn-primary { background: var(--accent); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
-        .btn-danger { background: #2C2C2E; color: var(--danger); }
-        .btn:active { transform: scale(0.98); opacity: 0.9; }
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-ghost { background: #2C2C2E; color: var(--text); }
 
-        /* Checklist */
-        .check-row { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            padding: 14px 0; 
-            border-bottom: 1px solid var(--border); 
-        }
-        .check-row:last-child { border-bottom: none; }
-        .check-row input[type="checkbox"] { 
-            width: 22px; 
-            height: 22px; 
-            margin: 0; 
-            accent-color: var(--accent); 
-        }
+        /* Checklist & Histórico */
+        .row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .row input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--accent); }
+        .hist-item { padding: 10px; border-bottom: 1px solid var(--border); font-size: 14px; }
     </style>
 </head>
 <body>
@@ -143,56 +70,126 @@
 <header id="header-title">Caderno de Estudo</header>
 
 <div id="p-caderno" class="page active">
-    <div id="export-area">
+    <div id="pdf-content">
         <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
         
-        <div class="card" style="border-left: 5px solid #3498db;">
+        <div class="card" style="border-left: 4px solid #3498db;">
             <div class="badge">Pilar 1</div>
-            <h2>Observação 🔍</h2>
-            <p style="font-size: 12px; color: var(--muted); margin-bottom: 0;">"O que eu vejo no texto?"</p>
-            <textarea id="obs" rows="5" placeholder="Identifique verbos, repetições e fatos..."></textarea>
+            <h3>Observação 🔍</h3>
+            <textarea id="obs" rows="4" placeholder="O que eu vejo no texto?"></textarea>
         </div>
 
-        <div class="card" style="border-left: 5px solid #f1c40f;">
+        <div class="card" style="border-left: 4px solid #f1c40f;">
             <div class="badge">Pilar 2</div>
-            <h2>Interpretação 💡</h2>
-            <p style="font-size: 12px; color: var(--muted); margin-bottom: 0;">"O que significou LÁ?"</p>
-            <textarea id="int" rows="5" placeholder="Busque a intenção do autor original..."></textarea>
+            <h3>Interpretação 💡</h3>
+            <textarea id="int" rows="4" placeholder="O que significou lá?"></textarea>
         </div>
 
-        <div class="card" style="border-left: 5px solid #9b59b6;">
-            <div class="badge">Apoio</div>
-            <h2>Ferramentas 🛠️</h2>
-            <textarea id="fer" rows="3" placeholder="Línguas originais e comentários..."></textarea>
+        <div class="card" style="border-left: 4px solid #9b59b6;">
+            <div class="badge">Extra</div>
+            <h3>Ferramentas 🛠️</h3>
+            <textarea id="fer" rows="3" placeholder="Grego/Hebraico/Comentários..."></textarea>
         </div>
 
-        <div class="card" style="border-left: 5px solid #27ae60;">
+        <div class="card" style="border-left: 4px solid #27ae60;">
             <div class="badge">Pilar 3</div>
-            <h2>Aplicação 🌱</h2>
-            <p style="font-size: 12px; color: var(--muted); margin-bottom: 0;">"O que significa AQUI?"</p>
-            <textarea id="apl" rows="5" placeholder="Como viver essa verdade hoje?"></textarea>
+            <h3>Aplicação 🌱</h3>
+            <textarea id="apl" rows="4" placeholder="O que significa para mim?"></textarea>
         </div>
     </div>
-    <button class="btn btn-primary" onclick="gerarPDF()">📄 Exportar Relatório PDF</button>
+    <button class="btn btn-primary" onclick="salvarEGerarPDF()">💾 Salvar e Gerar PDF</button>
 </div>
 
 <div id="p-teoria" class="page">
-    <input type="text" class="search-box" placeholder="🔎 Pesquisar na apostila..." onkeyup="filtrarTeoria(this.value)">
-    
-    <div id="teoria-lista">
+    <input type="text" id="search" class="search-box" placeholder="🔎 Pesquisar na apostila..." onkeyup="filtrarTeoria()">
+    <div id="lista-teoria">
         <div class="card t-item">
-            <div class="badge">Aula 1</div>
-            <h3>Exegese vs Eisegese</h3>
-            <p style="font-size: 14px; color: var(--muted);">Exegese é extrair o sentido original. Eisegese é impor um sentido pessoal ao texto. Busque sempre a <strong>Intenção Autoral</strong>.</p>
+            <div class="badge">CONCEITO</div>
+            <h3>Exegese x Eisegese</h3>
+            <p style="font-size: 14px; color: var(--muted);">Exegese: tirar do texto. Eisegese: impor ao texto. Foco na intenção do autor.</p>
         </div>
-
         <div class="card t-item">
-            <div class="badge">Aula 2 & 3</div>
-            <h3>O Método</h3>
-            <p style="font-size: 14px; color: var(--muted);">A observação identifica o que o autor escreveu. A interpretação busca o que os destinatários originais ouviram.</p>
+            <div class="badge">PILAR 1</div>
+            <h3>Observação</h3>
+            <p style="font-size: 14px; color: var(--muted);">Identifique verbos, repetições, contrastes e o que Deus revela de si mesmo.</p>
         </div>
-
         <div class="card t-item">
-            <div class="badge">Aula 5</div>
-            <h3>Ferramentas</h3>
-            <p style="font-size: 14px; color: var(--muted);">O Grego e Hebraico revelam ênfases que traduções perdem
+            <div class="badge">PILAR 2</div>
+            <h3>Interpretação</h3>
+            <p style="font-size: 14px; color: var(--muted);">Contexto histórico e cultural. Um texto não pode significar o que nunca significou para o autor.</p>
+        </div>
+    </div>
+    <a href="INTENSIVO_COMO_ESTUDAR_A_BIBLIA.pdf" download class="btn btn-ghost" style="text-align:center; text-decoration:none; display:block;">📥 Baixar Apostila PDF</a>
+</div>
+
+<div id="p-check" class="page">
+    <h2>Progresso do Estudo</h2>
+    <div class="card">
+        <div class="row"><input type="checkbox"> <span>Oração Inicial</span></div>
+        <div class="row"><input type="checkbox"> <span>Leitura do Contexto</span></div>
+        <div class="row"><input type="checkbox"> <span>Identificação de Verbos</span></div>
+        <div class="row"><input type="checkbox"> <span>Busca da Intenção Autoral</span></div>
+        <div class="row"><input type="checkbox"> <span>Aplicação Pessoal</span></div>
+    </div>
+    <button class="btn btn-ghost" onclick="limparTudo()" style="color: var(--danger);">🗑️ Resetar Estudo Atual</button>
+</div>
+
+<div id="p-hist" class="page">
+    <h2>Estudos Realizados</h2>
+    <div id="lista-hist" class="card">
+        </div>
+</div>
+
+<nav>
+    <div class="nav-item active" onclick="switchPage('p-caderno', this, 'Caderno de Estudo')"><span>📝</span>Caderno</div>
+    <div class="nav-item" onclick="switchPage('p-teoria', this, 'Biblioteca')"><span>📚</span>Teoria</div>
+    <div class="nav-item" onclick="switchPage('p-check', this, 'Progresso')"><span>✅</span>Checklist</div>
+    <div class="nav-item" onclick="switchPage('p-hist', this, 'Histórico')"><span>🕒</span>Histórico</div>
+</nav>
+
+<script>
+    function switchPage(id, el, title) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
+        document.getElementById('header-title').innerText = title;
+        window.scrollTo(0,0);
+    }
+
+    function filtrarTeoria() {
+        let q = document.getElementById('search').value.toLowerCase();
+        document.querySelectorAll('.t-item').forEach(item => {
+            item.style.display = item.innerText.toLowerCase().includes(q) ? 'block' : 'none';
+        });
+    }
+
+    function salvarEGerarPDF() {
+        const ref = document.getElementById('ref').value || 'Estudo';
+        // Salva no histórico
+        let hist = JSON.parse(localStorage.getItem('edb_hist') || '[]');
+        hist.push({ ref: ref, data: new Date().toLocaleDateString() });
+        localStorage.setItem('edb_hist', JSON.stringify(hist));
+        carregarHist();
+
+        // PDF
+        const opt = { margin: 10, filename: `EDB_${ref}.pdf`, html2canvas: { scale: 2, backgroundColor: '#161618' }, jsPDF: { unit: 'mm', format: 'a4' } };
+        html2pdf().set(opt).from(document.getElementById('pdf-content')).save();
+    }
+
+    function carregarHist() {
+        const hist = JSON.parse(localStorage.getItem('edb_hist') || '[]');
+        document.getElementById('lista-hist').innerHTML = hist.map(h => `<div class="hist-item">📅 ${h.data} - <b>${h.ref}</b></div>`).reverse().join('') || 'Nenhum estudo salvo.';
+    }
+
+    function limparTudo() {
+        if(confirm("Limpar o caderno atual?")) {
+            document.querySelectorAll('textarea, input').forEach(i => i.value = "");
+            document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+        }
+    }
+
+    window.onload = carregarHist;
+</script>
+</body>
+</html>
