@@ -11,39 +11,28 @@
             --text: #ffffff; --muted: #8E8E93; --border: #2C2C2E;
             --success: #30D158; --danger: #FF453A;
         }
-        
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 90px; }
         header { padding: 20px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; text-align: center; }
-
-        /* Navegação Inferior */
         nav { position: fixed; bottom: 0; width: 100%; background: var(--card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000; }
-        .nav-item { color: var(--muted); text-decoration: none; font-size: 11px; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.2s; }
+        .nav-item { color: var(--muted); text-decoration: none; font-size: 11px; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item span { font-size: 22px; margin-bottom: 4px; }
-
-        /* Páginas */
         .page { display: none; padding: 20px; animation: fadeIn 0.2s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* UI Elements */
         .card { background: var(--card); border-radius: 14px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border); }
         .badge { background: #323234; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; margin-bottom: 10px; display: inline-block; text-transform: uppercase; }
         h3 { margin: 0; color: var(--accent); font-size: 1.1rem; }
-        
         textarea, input { width: 100%; background: #000; border: 1px solid var(--border); border-radius: 10px; color: #fff; padding: 14px; margin-top: 10px; font-size: 16px; box-sizing: border-box; outline: none; }
-        .search-box { background: #1C1C1E; border: none; margin-bottom: 20px; }
-
-        /* Botões de Exportação */
         .export-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .btn { padding: 16px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-pdf { background: var(--danger); color: white; }
         .btn-txt { background: #323234; color: white; border: 1px solid #48484a; }
         .btn-save { background: var(--accent); color: white; width: 100%; margin-top: 20px; }
-
-        /* Lista de Histórico */
-        .hist-item { padding: 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 14px; }
-        .hist-date { color: var(--muted); font-size: 12px; }
+        .hist-item { padding: 15px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; }
+        .hist-item:active { background: #2c2c2e; }
+        .hist-header { display: flex; justify-content: space-between; align-items: center; }
+        .hist-date { color: var(--muted); font-size: 11px; }
     </style>
 </head>
 <body>
@@ -53,80 +42,39 @@
 <div id="p-caderno" class="page active">
     <div id="pdf-area">
         <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
-        
-        <div class="card" style="border-left: 4px solid var(--accent);">
-            <div class="badge">Passo 1</div>
-            <h3>Observação 🔍</h3>
-            <textarea id="obs" rows="4" placeholder="O que o texto diz objetivamente?"></textarea>
-        </div>
-
-        <div class="card" style="border-left: 4px solid #F1C40F;">
-            <div class="badge">Passo 2</div>
-            <h3>Interpretação 💡</h3>
-            <textarea id="int" rows="4" placeholder="O que isso significou para o autor e ouvintes originais?"></textarea>
-        </div>
-
-        <div class="card" style="border-left: 4px solid #9B59B6;">
-            <div class="badge">Apoio</div>
-            <h3>Ferramentas 🛠️</h3>
-            <textarea id="fer" rows="3" placeholder="Línguas originais, léxicos e comentários..."></textarea>
-        </div>
-
-        <div class="card" style="border-left: 4px solid var(--success);">
-            <div class="badge">Passo 3</div>
-            <h3>Aplicação 🌱</h3>
-            <textarea id="apl" rows="4" placeholder="Como essa verdade se aplica hoje?"></textarea>
-        </div>
+        <div class="card" style="border-left: 4px solid var(--accent);"><div class="badge">Passo 1</div><h3>Observação 🔍</h3><textarea id="obs" rows="4"></textarea></div>
+        <div class="card" style="border-left: 4px solid #F1C40F;"><div class="badge">Passo 2</div><h3>Interpretação 💡</h3><textarea id="int" rows="4"></textarea></div>
+        <div class="card" style="border-left: 4px solid #9B59B6;"><div class="badge">Apoio</div><h3>Ferramentas 🛠️</h3><textarea id="fer" rows="3"></textarea></div>
+        <div class="card" style="border-left: 4px solid var(--success);"><div class="badge">Passo 3</div><h3>Aplicação 🌱</h3><textarea id="apl" rows="4"></textarea></div>
     </div>
-
-    <button class="btn btn-save" onclick="salvarNoHistorico()">💾 Registrar e Liberar Downloads</button>
-    
+    <button class="btn btn-save" onclick="salvarNoHistorico()">💾 Registrar Estudo Completo</button>
     <div class="export-group">
-        <button class="btn btn-pdf" onclick="baixarPDF()">📄 Baixar PDF</button>
-        <button class="btn btn-txt" onclick="baixarTXT()">📝 Baixar TXT</button>
+        <button class="btn btn-pdf" onclick="baixarPDF()">📄 PDF</button>
+        <button class="btn btn-txt" onclick="baixarTXT()">📝 TXT</button>
     </div>
 </div>
 
 <div id="p-teoria" class="page">
-    <input type="text" id="search" class="search-box" placeholder="🔎 Pesquisar na apostila..." onkeyup="filtrarTeoria()">
+    <input type="text" id="search" style="background:#1c1c1e; border:none; margin-bottom:20px;" placeholder="🔎 Pesquisar na apostila..." onkeyup="filtrarTeoria()">
     <div id="lista-teoria">
-        <div class="card t-item">
-            <div class="badge">Aula 1</div>
-            <h3>Eisegese (O Vício)</h3>
-            <p style="font-size: 14px; color: var(--muted);">Ler "para dentro" do texto. Impor seus próprios pensamentos em vez da intenção do autor.</p>
-        </div>
-        <div class="card t-item">
-            <div class="badge">Aula 2</div>
-            <h3>Pilar 1: Observação</h3>
-            <p style="font-size: 14px; color: var(--muted);">Identifique verbos, repetições e personagens. Não interprete ainda, apenas veja o que está lá.</p>
-        </div>
-        <div class="card t-item">
-            <div class="badge">Aula 3</div>
-            <h3>Pilar 2: Interpretação</h3>
-            <p style="font-size: 14px; color: var(--muted);">Contexto é rei. O que o autor quis comunicar para aquela audiência específica?</p>
-        </div>
+        <div class="card t-item"><div class="badge">Aula 1</div><h3>Eisegese</h3><p style="font-size:14px; color:var(--muted);">Impor sentido pessoal ao texto.</p></div>
+        <div class="card t-item"><div class="badge">Aula 2</div><h3>Observação</h3><p style="font-size:14px; color:var(--muted);">Verbos, repetições e o que Deus revela de Si.</p></div>
     </div>
 </div>
 
 <div id="p-check" class="page">
-    <h2>Checklist de Estudo</h2>
+    <h2>Checklist</h2>
     <div class="card">
-        <label style="display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border);">
-            <input type="checkbox"> Orar por iluminação
-        </label>
-        <label style="display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border);">
-            <input type="checkbox"> Ler o contexto (capítulos antes/depois)
-        </label>
-        <label style="display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border);">
-            <input type="checkbox"> Identificar a intenção autoral
-        </label>
+        <label style="display:flex; gap:10px; padding:12px 0; border-bottom:1px solid var(--border);"><input type="checkbox"> Oração inicial</label>
+        <label style="display:flex; gap:10px; padding:12px 0; border-bottom:1px solid var(--border);"><input type="checkbox"> Análise de contexto</label>
     </div>
-    <button class="btn btn-txt" onclick="limparCaderno()" style="width:100%; border-color:var(--danger); color:var(--danger)">🗑️ Resetar Estudo</button>
+    <button class="btn btn-txt" onclick="limparCaderno()" style="width:100%; color:var(--danger)">🗑️ Limpar Campos</button>
 </div>
 
 <div id="p-hist" class="page">
     <h2>Estudos Realizados</h2>
-    <div id="lista-hist" class="card"></div>
+    <p style="font-size: 12px; color: var(--muted);">Toque em um estudo para abrir e editar.</p>
+    <div id="lista-hist" class="card" style="padding:0;"></div>
 </div>
 
 <nav>
@@ -143,74 +91,67 @@
         document.getElementById(id).classList.add('active');
         el.classList.add('active');
         document.getElementById('header-title').innerText = title;
-        window.scrollTo(0,0);
-    }
-
-    function filtrarTeoria() {
-        let q = document.getElementById('search').value.toLowerCase();
-        document.querySelectorAll('.t-item').forEach(i => {
-            i.style.display = i.innerText.toLowerCase().includes(q) ? 'block' : 'none';
-        });
     }
 
     function salvarNoHistorico() {
-        const ref = document.getElementById('ref').value || 'Estudo';
-        let hist = JSON.parse(localStorage.getItem('edb_history') || '[]');
-        hist.push({ ref: ref, data: new Date().toLocaleDateString() });
-        localStorage.setItem('edb_history', JSON.stringify(hist));
+        const ref = document.getElementById('ref').value || 'Sem título';
+        const dados = {
+            ref: ref,
+            obs: document.getElementById('obs').value,
+            int: document.getElementById('int').value,
+            fer: document.getElementById('fer').value,
+            apl: document.getElementById('apl').value,
+            data: new Date().toLocaleString('pt-BR')
+        };
+        let hist = JSON.parse(localStorage.getItem('edb_v4_hist') || '[]');
+        hist.push(dados);
+        localStorage.setItem('edb_v4_hist', JSON.stringify(hist));
         carregarHistorico();
-        alert("Estudo registrado no histórico! Agora você pode baixar o PDF ou TXT.");
+        alert("Estudo salvo com sucesso!");
     }
 
     function carregarHistorico() {
-        const hist = JSON.parse(localStorage.getItem('edb_history') || '[]');
-        document.getElementById('lista-hist').innerHTML = hist.map(h => `
-            <div class="hist-item">
-                <span><b>${h.ref}</b></span>
-                <span class="hist-date">${h.data}</span>
-            </div>`).reverse().join('') || 'Nenhum estudo salvo.';
+        const hist = JSON.parse(localStorage.getItem('edb_v4_hist') || '[]');
+        const container = document.getElementById('lista-hist');
+        container.innerHTML = hist.map((h, index) => `
+            <div class="hist-item" onclick="abrirEstudo(${index})">
+                <div class="hist-header">
+                    <b>${h.ref}</b>
+                    <span class="hist-date">${h.data}</span>
+                </div>
+                <small style="color:var(--muted)">${h.obs.substring(0, 40)}...</small>
+            </div>
+        `).reverse().join('') || '<p style="padding:20px">Nenhum estudo salvo.</p>';
+    }
+
+    function abrirEstudo(index) {
+        const hist = JSON.parse(localStorage.getItem('edb_v4_hist') || '[]');
+        const estudo = hist[index];
+        if(confirm(`Deseja carregar o estudo "${estudo.ref}" no caderno? (Isso substituirá o texto atual)`)) {
+            document.getElementById('ref').value = estudo.ref;
+            document.getElementById('obs').value = estudo.obs;
+            document.getElementById('int').value = estudo.int;
+            document.getElementById('fer').value = estudo.fer;
+            document.getElementById('apl').value = estudo.apl;
+            switchPage('p-caderno', document.querySelector('.nav-item'), 'Caderno de Estudo');
+        }
     }
 
     function baixarPDF() {
         const element = document.getElementById('pdf-area');
         const ref = document.getElementById('ref').value || 'estudo';
-        const opt = { 
-            margin: 10, filename: `EDB_${ref}.pdf`, 
-            html2canvas: { scale: 2, backgroundColor: '#161618' },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
-        };
-        html2pdf().set(opt).from(element).save();
+        html2pdf().set({ margin: 10, filename: `EDB_${ref}.pdf`, html2canvas: { scale: 2, backgroundColor: '#161618' }, jsPDF: { unit: 'mm', format: 'a4' } }).from(element).save();
     }
 
     function baixarTXT() {
         const ref = document.getElementById('ref').value || 'estudo';
-        const conteudo = `
-ESTUDO BÍBLICO - EDB
-Referência: ${ref}
------------------------------
-1. OBSERVAÇÃO:
-${document.getElementById('obs').value}
-
-2. INTERPRETAÇÃO:
-${document.getElementById('int').value}
-
-3. FERRAMENTAS:
-${document.getElementById('fer').value}
-
-4. APLICAÇÃO:
-${document.getElementById('apl').value}
-        `;
-        const blob = new Blob([conteudo], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `EDB_${ref}.txt`;
-        link.click();
+        const txt = `REF: ${ref}\n\n1.OBS:\n${document.getElementById('obs').value}\n\n2.INT:\n${document.getElementById('int').value}\n\n3.FER:\n${document.getElementById('fer').value}\n\n4.APL:\n${document.getElementById('apl').value}`;
+        const blob = new Blob([txt], { type: 'text/plain' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `EDB_${ref}.txt`; a.click();
     }
 
     function limparCaderno() {
-        if(confirm("Isso apagará o texto do caderno. Continuar?")) {
-            document.querySelectorAll('textarea, input').forEach(i => i.value = "");
-        }
+        if(confirm("Limpar caderno?")) document.querySelectorAll('textarea, input').forEach(i => i.value = "");
     }
 
     window.onload = carregarHistorico;
