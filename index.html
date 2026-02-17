@@ -13,13 +13,37 @@
 
 <main>
     <section id="p-caderno" class="page active">
-        <div id="pdf-area">
-            <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
-            <div class="card p1"><div class="badge">Passo 1</div><h3>Observação 🔍</h3><textarea id="obs" rows="4"></textarea></div>
-            <div class="card p2"><div class="badge">Passo 2</div><h3>Interpretação 💡</h3><textarea id="int" rows="4"></textarea></div>
-            <div class="card p3"><div class="badge">Ferramentas</div><h3>Apoio 🛠️</h3><textarea id="fer" rows="3"></textarea></div>
-            <div class="card p4"><div class="badge">Passo 3</div><h3>Aplicação 🌱</h3><textarea id="apl" rows="4"></textarea></div>
-        </div>
+       <div id="pdf-area">
+    <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
+    
+    <div class="card p1">
+        <div class="badge">Passo 1</div>
+        <h3>Observação 🔍</h3>
+        <textarea id="obs" rows="4" 
+            placeholder="O que eu vejo no texto? (Repetições, verbos, conectores como 'porque' ou 'pois', personagens e clima do texto)."></textarea>
+    </div>
+
+    <div class="card p2">
+        <div class="badge">Passo 2</div>
+        <h3>Interpretação 💡</h3>
+        <textarea id="int" rows="4" 
+            placeholder="O que isso significou 'lá' para eles? (Contexto histórico, cultural e a intenção original do autor)."></textarea>
+    </div>
+
+    <div class="card p3">
+        <div class="badge">Apoio</div>
+        <h3>Ferramentas 🛠️</h3>
+        <textarea id="fer" rows="3" 
+            placeholder="O que dizem as outras traduções ou o dicionário bíblico? (Múltiplas versões, Concordância Strong, Léxicos)."></textarea>
+    </div>
+
+    <div class="card p4">
+        <div class="badge">Passo 3</div>
+        <h3>Aplicação 🌱</h3>
+        <textarea id="apl" rows="4" 
+            placeholder="O que isso significa 'aqui' para mim? (Extraia o Princípio Eterno: o que o texto sempre significa, independente da época)."></textarea>
+    </div>
+</div>
         <button class="btn btn-save" onclick="storage.salvar()">💾 Registrar Estudo</button>
         <div class="export-group">
             <button class="btn btn-pdf" onclick="exporter.pdf()">📄 PDF</button>
