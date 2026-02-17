@@ -81,9 +81,13 @@
 </section>
 
     <section id="p-hist" class="page">
-        <h2>Meus Estudos</h2>
-        <div id="lista-hist"></div>
-    </section>
+    <h2>Meus Estudos</h2>
+    <input type="text" id="search-hist" class="search-box" 
+           placeholder="🔎 Buscar nos meus estudos..." 
+           onkeyup="storage.buscarNoHistorico()">
+    
+    <div id="lista-hist"></div>
+</section>
 </main>
 
 <nav>

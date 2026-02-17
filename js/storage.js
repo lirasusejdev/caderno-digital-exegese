@@ -32,5 +32,37 @@ const storage = {
         document.getElementById('apl').value = e.apl;
         app.nav('p-caderno', document.querySelector('.nav-item'), 'Caderno');
     }
+    buscarNoHistorico() {
+        // Pega o termo digitado
+        let filter = document.getElementById('search-hist').value.toLowerCase();
+        // Pega todos os cards de dentro da lista de histórico
+        let cards = document.querySelector('#lista-hist').querySelectorAll('.card');
+
+        cards.forEach(card => {
+            // Verifica se o texto do card (Referência ou Data) contém o filtro
+            let texto = card.innerText.toLowerCase();
+            if (texto.includes(filter)) {
+                card.style.display = ""; // Mostra
+            } else {
+                card.style.display = "none"; // Esconde
+            }
+        });
+    },
+
+    // Garanta que a função render() limpe a busca ao ser chamada
+    render() {
+        const h = JSON.parse(localStorage.getItem('edb_v5') || '[]');
+        const lista = document.getElementById('lista-hist');
+        
+        lista.innerHTML = h.map((e, i) => `
+            <div class="card" onclick="storage.load(${i})">
+                <b>${e.ref}</b><br><small>${e.data}</small>
+            </div>
+        `).reverse().join('') || "Nenhum estudo encontrado.";
+        
+        // Limpa o campo de busca se ele existir
+        const searchInput = document.getElementById('search-hist');
+        if(searchInput) searchInput.value = "";
+    }
 };
 window.onload = () => storage.render();
