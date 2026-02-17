@@ -15,12 +15,18 @@ const exporter = {
     },
 
     downloadApostila() {
-        // Caminho para o arquivo da apostila no seu projeto
-        const caminhoArquivo = 'assets/INTENSIVO_COMO_ESTUDAR_A_BIBLIA.pdf';
-        
-        const link = document.createElement('a');
-        link.href = caminhoArquivo;
-        link.download = 'INTENSIVO_COMO_ESTUDAR_A_BIBLIA.pdf';
-        link.click();
-    }
+    // 1. O caminho deve ser IGUAL ao nome do arquivo na pasta
+    const caminhoArquivo = 'assets/intensivo-edb.pdf'; 
+    
+    const link = document.createElement('a');
+    link.href = caminhoArquivo;
+    
+    // 2. O atributo download define o nome que o usuário verá ao baixar
+    link.download = 'Intensivo_Como_Estudar_a_Biblia.pdf';
+    
+    // 3. Procedimento de segurança: anexa, clica e remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 };
