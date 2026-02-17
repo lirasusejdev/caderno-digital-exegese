@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Diário de Exegese - EDB</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background-color: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: #e67e22; }
+        textarea, input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-top: 20px; font-size: 16px; }
+        button:hover { background: #219150; }
+        .warning { font-size: 0.9em; color: #7f8c8d; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>📓 Método de Estudo Bíblico (Exegese)</h1>
+    <p class="warning">Baseado no Intensivo "Como Estudar a Bíblia" - FHOP</p>
+
+    <div class="card">
+        <h2>Passo Inicial: O Texto</h2>
+        <label>Referência Bíblica (Ex: Filipenses 4:13):</label>
+        <input type="text" id="ref" placeholder="Qual livro e capítulo você vai estudar?">
+    </div>
+
+    <div class="card">
+        <h2>Pilar 1: Observação 🔍</h2>
+        <p class="warning">"O que eu vejo no texto?" (Fatos, verbos, repetições)</p>
+        <textarea id="pilar1" rows="5" placeholder="Liste o que você vê sem interpretar ainda..."></textarea>
+    </div>
+
+    <div class="card">
+        <h2>Pilar 2: Interpretação 💡</h2>
+        <p class="warning">"O que isso significou LÁ para eles?" (Intenção autoral e contexto histórico)</p>
+        <textarea id="pilar2" rows="5" placeholder="Qual foi a intenção do autor original?"></textarea>
+    </div>
+
+    <div class="card">
+        <h2>Pilar 3: Aplicação 🌱</h2>
+        <p class="warning">"O que isso significa AQUI para mim?" (Mudança de mente e prática)</p>
+        <textarea id="pilar3" rows="5" placeholder="Como essa verdade se aplica à minha vida hoje?"></textarea>
+    </div>
+
+    <button onclick="salvarEstudo()">Baixar PDF do Estudo</button>
+
+    <script>
+        function salvarEstudo() {
+            const ref = document.getElementById('ref').value;
+            const p1 = document.getElementById('pilar1').value;
+            const p2 = document.getElementById('pilar2').value;
+            const p3 = document.getElementById('pilar3').value;
+            
+            const conteudo = `ESTUDO BÍBLICO: ${ref}\n\n1. OBSERVAÇÃO:\n${p1}\n\n2. INTERPRETAÇÃO:\n${p2}\n\n3. APLICAÇÃO:\n${p3}`;
+            
+            const blob = new Blob([conteudo], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Estudo_${ref}.txt`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
