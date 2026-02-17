@@ -3,168 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDB - Caderno de Exegese</title>
+    <title>Central de Exegese - EDB</title>
     <style>
         :root {
-            --bg-body: #121212;
-            --bg-card: #1e1e1e;
+            --bg-body: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-sidebar: #141414;
             --text-main: #e0e0e0;
-            --text-muted: #b0b0b0;
+            --accent: #3498db;
             --border: #333;
-            --accent-p1: #3498db; /* Azul Observação */
-            --accent-p2: #f1c40f; /* Amarelo Interpretação */
-            --accent-tools: #9b59b6; /* Roxo Ferramentas */
-            --accent-p3: #27ae60; /* Verde Aplicação */
+            --success: #27ae60;
         }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            line-height: 1.6; 
-            max-width: 850px; 
-            margin: auto; 
-            padding: 20px; 
-            background-color: var(--bg-body); 
-            color: var(--text-main); 
-        }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-body); color: var(--text-main); overflow: hidden; }
 
-        h1 { text-align: center; color: #fff; margin-bottom: 30px; font-weight: 300; }
-
-        .card { 
-            background: var(--bg-card); 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            margin-bottom: 25px; 
-            border-left: 6px solid #444;
-            transition: transform 0.2s;
-        }
-
-        .card:hover { transform: translateY(-2px); }
-        .p1 { border-left-color: var(--accent-p1); }
-        .p2 { border-left-color: var(--accent-p2); }
-        .tools { border-left-color: var(--accent-tools); }
-        .p3 { border-left-color: var(--accent-p3); }
-
-        h2 { margin-top: 0; font-size: 1.2em; color: #fff; display: flex; align-items: center; gap: 10px; }
+        /* Barra de Navegação Lateral */
+        .sidebar { width: 350px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .sidebar-content { flex: 1; overflow-y: auto; padding: 20px; }
         
-        .instrucao { 
-            font-size: 0.85em; 
-            color: var(--text-muted); 
-            margin-bottom: 12px; 
-            display: block;
-            border-bottom: 1px solid #333;
-            padding-bottom: 8px;
-        }
+        /* Busca Global */
+        .search-container { padding: 20px; border-bottom: 1px solid var(--border); }
+        .search-box { width: 100%; padding: 10px; background: #222; border: 1px solid var(--border); border-radius: 8px; color: #fff; outline: none; }
 
-        input, textarea { 
-            width: 100%; 
-            padding: 12px; 
-            background: #252525; 
-            border: 1px solid var(--border); 
-            border-radius: 6px; 
-            color: #fff; 
-            font-size: 1em; 
-            box-sizing: border-box;
-        }
+        /* Estilos de Conteúdo Teórico */
+        .topic { margin-bottom: 20px; font-size: 0.85em; background: #1e1e1e; padding: 12px; border-radius: 8px; border: 1px solid #333; }
+        .hidden { display: none; }
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 0.7em; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; background: var(--accent); color: white; }
 
-        textarea:focus { border-color: var(--accent-p1); outline: none; background: #2a2a2a; }
-
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        /* Área Principal */
+        .main-content { flex: 1; overflow-y: auto; padding: 40px; display: grid; grid-template-columns: 1fr 300px; gap: 30px; }
+        .caderno-estudo { max-width: 800px; }
         
-        button { 
-            flex: 1;
-            padding: 15px; 
-            border-radius: 8px; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 1em;
-            transition: opacity 0.3s;
-        }
+        .card { background: var(--bg-card); padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid #444; }
+        .p1 { border-left-color: #3498db; }
+        .p2 { border-left-color: #f1c40f; }
+        .tools { border-left-color: #9b59b6; }
+        .p3 { border-left-color: #27ae60; }
 
+        textarea, input { width: 100%; padding: 12px; background: #222; border: 1px solid var(--border); border-radius: 6px; color: #fff; margin-top: 10px; box-sizing: border-box; }
+        
+        /* Painel de Controle (Checklist e Histórico) */
+        .dashboard { background: var(--bg-card); padding: 20px; border-radius: 12px; height: fit-content; border: 1px solid var(--border); }
+        .dashboard h3 { font-size: 1.1em; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .checklist-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9em; }
+        .checklist-item input { width: auto; margin: 0; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        button { padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-download { background: var(--success); color: white; }
+        .btn-reset { background: #e74c3c; color: white; }
         .btn-save { background: #444; color: white; }
-        .btn-download { background: var(--accent-p3); color: white; }
-        button:hover { opacity: 0.8; }
 
-        .footer { text-align: center; font-size: 0.8em; color: var(--text-muted); margin-top: 40px; }
+        #historico-lista { list-style: none; padding: 0; font-size: 0.85em; color: var(--accent); }
+        #historico-lista li { padding: 5px 0; border-bottom: 1px solid #333; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h1>📓 Caderno de Exegese</h1>
-
-    <div class="card">
-        <h2>📍 Referência Bíblica</h2>
-        <input type="text" id="ref" placeholder="Ex: Filipenses 4:10-13">
+    <div class="sidebar">
+        <div class="search-container">
+            <input type="text" id="globalSearch" class="search-box" placeholder="🔎 Pesquisar na Apostila..." onkeyup="filtrarConteudo()">
+        </div>
+        <div class="sidebar-content">
+            <h2>📚 Orientações EDB</h2>
+            <div class="topic searchable">
+                <span class="badge">AULA 1</span>
+                <h3>Exegese vs Eisegese</h3>
+                <p>Exegese: Puxar o sentido para fora. Eisegese: Impor sentido pessoal. Foco sempre na <b>Intenção Autoral</b>.</p>
+            </div>
+            <div class="topic searchable">
+                <span class="badge">AULA 2</span>
+                <h3>Observação</h3>
+                <p>Verbos, repetições, personagens. O que Deus revela de si mesmo? Não interprete ainda.</p>
+            </div>
+            <div class="topic searchable">
+                <span class="badge">AULA 3</span>
+                <h3>Interpretação</h3>
+                <p>Contexto histórico e cultural. O que significou lá? O texto não pode significar o que nunca significou.</p>
+            </div>
+        </div>
     </div>
 
-    <div class="card p1">
-        <h2>1. Observação 🔍</h2>
-        <span class="instrucao">Pergunta da Apostila: "O que eu vejo no texto?" [cite: 69]</span>
-        <textarea id="p1" rows="5" placeholder="• Liste fatos, verbos e repetições.&#10;• O que Deus revela de si mesmo aqui?&#10;• Evite interpretar agora!"></textarea>
-    </div>
+    <div class="main-content">
+        <div class="caderno-estudo">
+            <h1>📓 Meu Caderno de Estudo</h1>
+            <div class="card">
+                <label>Referência Bíblica:</label>
+                <input type="text" id="ref" placeholder="Ex: Filipenses 4:13" oninput="salvarAuto()">
+            </div>
+            <div class="card p1"><h3>1. Observação 🔍</h3><textarea id="p1" rows="4" placeholder="O que eu vejo no texto..." oninput="salvarAuto()"></textarea></div>
+            <div class="card p2"><h3>2. Interpretação 💡</h3><textarea id="p2" rows="4" placeholder="O que significou para eles..." oninput="salvarAuto()"></textarea></div>
+            <div class="card tools"><h3>3. Caixa de Ferramentas 🛠️</h3><textarea id="tools" rows="3" placeholder="Grego/Hebraico e Comentários..." oninput="salvarAuto()"></textarea></div>
+            <div class="card p3"><h3>4. Aplicação 🌱</h3><textarea id="p3" rows="4" placeholder="O que significa para mim..." oninput="salvarAuto()"></textarea></div>
+        </div>
 
-    <div class="card p2">
-        <h2>2. Interpretação 💡</h2>
-        <span class="instrucao">Pergunta da Apostila: "O que isso significou LÁ para eles?" [cite: 70]</span>
-        <textarea id="p2" rows="5" placeholder="• Qual a intenção do autor original? [cite: 37]&#10;• Qual o contexto histórico?&#10;• O que os destinatários originais ouviram? [cite: 36]"></textarea>
-    </div>
+        <div class="dashboard">
+            <h3>✅ Checklist de Hoje</h3>
+            <div class="checklist-item"><input type="checkbox"> Orar antes de começar</div>
+            <div class="checklist-item"><input type="checkbox"> Ler o capítulo inteiro</div>
+            <div class="checklist-item"><input type="checkbox"> Fazer Observação</div>
+            <div class="checklist-item"><input type="checkbox"> Buscar Intenção Autoral</div>
+            <div class="checklist-item"><input type="checkbox"> Validar com Ferramentas</div>
+            <div class="checklist-item"><input type="checkbox"> Definir Prática Pessoal</div>
 
-    <div class="card tools">
-        <h2>3. Caixa de Ferramentas 🛠️</h2>
-        <span class="instrucao">Apoio: Grego/Hebraico e Comentários (último passo) [cite: 55]</span>
-        <textarea id="tools" rows="4" placeholder="• Notas de dicionários bíblicos.&#10;• Ênfases do original (grego/hebraico). [cite: 51]&#10;• Insights de comentários exegéticos. [cite: 55]"></textarea>
-    </div>
+            <h3>📅 Estudos Recentes</h3>
+            <ul id="historico-lista">
+                </ul>
 
-    <div class="card p3">
-        <h2>4. Aplicação 🌱</h2>
-        <span class="instrucao">Pergunta da Apostila: "O que isso significa AQUI para mim?" [cite: 71]</span>
-        <textarea id="p3" rows="5" placeholder="• Como a verdade original se aplica hoje?&#10;• O que não pode significar (limite da exegese)? [cite: 49]&#10;• Resposta prática e pessoal."></textarea>
-    </div>
-
-    <div class="btn-group">
-        <button class="btn-save" onclick="salvarLocal()">💾 Salvar Rascunho</button>
-        <button class="btn-download" onclick="baixarTxt()">📥 Baixar Estudo</button>
-    </div>
-
-    <div class="footer">
-        Baseado no Intensivo EDB - FHOP [cite: 4]
+            <div class="btn-group">
+                <button class="btn-save" onclick="salvarNoHistorico()">💾 Salvar no Histórico</button>
+                <button class="btn-download" onclick="baixarEstudo()">📥 Baixar .TXT</button>
+                <button class="btn-reset" onclick="limparTudo()">🗑️ Novo Estudo</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        function salvarLocal() {
-            const dados = {
-                ref: document.getElementById('ref').value,
-                p1: document.getElementById('p1').value,
-                p2: document.getElementById('p2').value,
-                tools: document.getElementById('tools').value,
-                p3: document.getElementById('p3').value
-            };
-            localStorage.setItem('meu_estudo_fhop', JSON.stringify(dados));
-            alert("Rascunho salvo no seu navegador!");
+        // Pesquisa na apostila
+        function filtrarConteudo() {
+            const input = document.getElementById('globalSearch').value.toLowerCase();
+            const topicos = document.getElementsByClassName('searchable');
+            for (let t of topicos) {
+                t.style.display = t.innerText.toLowerCase().includes(input) ? "block" : "none";
+            }
         }
 
-        window.onload = function() {
-            const salvo = localStorage.getItem('meu_estudo_fhop');
-            if (salvo) {
-                const d = JSON.parse(salvo);
-                document.getElementById('ref').value = d.ref;
-                document.getElementById('p1').value = d.p1;
-                document.getElementById('p2').value = d.p2;
-                document.getElementById('tools').value = d.tools;
-                document.getElementById('p3').value = d.p3;
-            }
-        };
+        // Salvar automaticamente o rascunho atual
+        function salvarAuto() {
+            const dados = { ref: document.getElementById('ref').value, p1: document.getElementById('p1').value, p2: document.getElementById('p2').value, tools: document.getElementById('tools').value, p3: document.getElementById('p3').value };
+            localStorage.setItem('rascunho_edb', JSON.stringify(dados));
+        }
 
-        function baixarTxt() {
+        // Salvar na lista de histórico
+        function salvarNoHistorico() {
+            const ref = document.getElementById('ref').value || "Sem nome";
+            let historico = JSON.parse(localStorage.getItem('historico_edb') || "[]");
+            historico.push({ ref: ref, data: new Date().toLocaleDateString() });
+            localStorage.setItem('historico_edb', JSON.stringify(historico));
+            carregarHistorico();
+            alert("Estudo registrado no histórico!");
+        }
+
+        function carregarHistorico() {
+            const lista = document.getElementById('historico-lista');
+            const historico = JSON.parse(localStorage.getItem('historico_edb') || "[]");
+            lista.innerHTML = historico.map(h => `<li>${h.data} - ${h.ref}</li>`).join('');
+        }
+
+        function limparTudo() {
+            if(confirm("Deseja limpar o caderno atual?")) {
+                document.getElementById('ref').value = "";
+                document.querySelectorAll('textarea').forEach(t => t.value = "");
+                localStorage.removeItem('rascunho_edb');
+            }
+        }
+
+        function baixarEstudo() {
             const ref = document.getElementById('ref').value || 'estudo';
-            const texto = `ESTUDO BÍBLICO (MÉTODO EDB)\nRef: ${ref}\n\n1. OBSERVAÇÃO:\n${document.getElementById('p1').value}\n\n2. INTERPRETAÇÃO:\n${document.getElementById('p2').value}\n\n3. FERRAMENTAS:\n${document.getElementById('tools').value}\n\n4. APLICAÇÃO:\n${document.getElementById('p3').value}`;
+            const texto = `ESTUDO BÍBLICO EDB\nRef: ${ref}\n\n1. OBSERVAÇÃO:\n${document.getElementById('p1').value}\n\n2. INTERPRETAÇÃO:\n${document.getElementById('p2').value}\n\n3. FERRAMENTAS:\n${document.getElementById('tools').value}\n\n4. APLICAÇÃO:\n${document.getElementById('p3').value}`;
             const blob = new Blob([texto], { type: "text/plain" });
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
             a.download = `${ref}.txt`;
             a.click();
         }
+
+        window.onload = () => {
+            carregarHistorico();
+            const salvo = JSON.parse(localStorage.getItem('rascunho_edb'));
+            if(salvo) {
+                document.getElementById('ref').value = salvo.ref;
+                document.getElementById('p1').value = salvo.p1;
+                document.getElementById('p2').value = salvo.p2;
+                document.getElementById('tools').value = salvo.tools;
+                document.getElementById('p3').value = salvo.p3;
+            }
+        };
     </script>
 </body>
 </html>
