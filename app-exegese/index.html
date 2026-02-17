@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Exegese - EDB</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<header id="header-title">Caderno de Estudo</header>
+
+<main>
+    <section id="p-caderno" class="page active">
+        <div id="pdf-area">
+            <input type="text" id="ref" placeholder="Referência (ex: Filipenses 4:13)">
+            <div class="card p1"><div class="badge">Passo 1</div><h3>Observação 🔍</h3><textarea id="obs" rows="4"></textarea></div>
+            <div class="card p2"><div class="badge">Passo 2</div><h3>Interpretação 💡</h3><textarea id="int" rows="4"></textarea></div>
+            <div class="card p3"><div class="badge">Ferramentas</div><h3>Apoio 🛠️</h3><textarea id="fer" rows="3"></textarea></div>
+            <div class="card p4"><div class="badge">Passo 3</div><h3>Aplicação 🌱</h3><textarea id="apl" rows="4"></textarea></div>
+        </div>
+        <button class="btn btn-save" onclick="storage.salvar()">💾 Registrar Estudo</button>
+        <div class="export-group">
+            <button class="btn btn-pdf" onclick="exporter.pdf()">📄 PDF</button>
+            <button class="btn btn-txt" onclick="exporter.txt()">📝 TXT</button>
+        </div>
+    </section>
+
+    <section id="p-teoria" class="page">
+        <input type="text" id="search" class="search-box" placeholder="🔎 Pesquisar na apostila..." onkeyup="app.buscar()">
+        <div id="lista-teoria">
+            <div class="card t-item"><h3>Exegese vs Eisegese</h3><p>Exegese extrai o sentido; Eisegese impõe o sentido.</p></div>
+        </div>
+    </section>
+
+    <section id="p-hist" class="page">
+        <h2>Meus Estudos</h2>
+        <div id="lista-hist"></div>
+    </section>
+</main>
+
+<nav>
+    <div class="nav-item active" onclick="app.nav('p-caderno', this, 'Caderno')"><span>📝</span>Anotar</div>
+    <div class="nav-item" onclick="app.nav('p-teoria', this, 'Biblioteca')"><span>📚</span>Teoria</div>
+    <div class="nav-item" onclick="app.nav('p-hist', this, 'Histórico')"><span>🕒</span>Histórico</div>
+</nav>
+
+<script src="js/app.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/export.js"></script>
+</body>
+</html>
