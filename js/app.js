@@ -7,9 +7,17 @@ const app = {
         document.getElementById('header-title').innerText = title;
     },
     buscar() {
-        let q = document.getElementById('search').value.toLowerCase();
-        document.querySelectorAll('.t-item').forEach(i => {
-            i.style.display = i.innerText.toLowerCase().includes(q) ? 'block' : 'none';
-        });
-    }
+    let input = document.getElementById('search');
+    let filter = input.value.toLowerCase();
+    let cards = document.querySelectorAll('.t-item');
+
+    cards.forEach(card => {
+        let texto = card.innerText.toLowerCase();
+        if (texto.includes(filter)) {
+            card.style.display = ""; // Mostra o card
+        } else {
+            card.style.display = "none"; // Esconde o card
+        }
+    });
+}
 };
