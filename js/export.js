@@ -20,7 +20,7 @@ const exporter = {
         
         const link = document.createElement('a');
         link.href = caminhoArquivo;
-        link.download = 'Apostila_EDB_FHOP.pdf';
+        link.download = 'INTENSIVO_COMO_ESTUDAR_A_BIBLIA.pdf';
         link.click();
     }
 };
