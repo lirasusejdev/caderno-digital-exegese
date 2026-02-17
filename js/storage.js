@@ -1,4 +1,5 @@
 const storage = {
+    // 1. SALVAR ESTUDO
     salvar() {
         const d = {
             ref: document.getElementById('ref').value || 'Sem Título',
@@ -6,63 +7,76 @@ const storage = {
             int: document.getElementById('int').value,
             fer: document.getElementById('fer').value,
             apl: document.getElementById('apl').value,
-            data: new Date().toLocaleString()
+            data: new Date().toLocaleString('pt-BR')
         };
+
+        // Salva no LocalStorage
         let h = JSON.parse(localStorage.getItem('edb_v5') || '[]');
         h.push(d);
         localStorage.setItem('edb_v5', JSON.stringify(h));
+
+        // Atualiza a lista visualmente
         this.render();
-        alert("Salvo!");
+        
+        alert("Estudo registrado com sucesso!");
     },
+
+    // 2. RENDERIZAR LISTA (Aqui é onde garantimos que o histórico aparece)
     render() {
         const h = JSON.parse(localStorage.getItem('edb_v5') || '[]');
-        document.getElementById('lista-hist').innerHTML = h.map((e, i) => `
-            <div class="card" onclick="storage.load(${i})">
-                <b>${e.ref}</b><br><small>${e.data}</small>
+        const listaDiv = document.getElementById('lista-hist');
+        
+        if (!listaDiv) return;
+
+        if (h.length === 0) {
+            listaDiv.innerHTML = '<p style="padding:20px; color:var(--muted)">Nenhum estudo registrado ainda.</p>';
+            return;
+        }
+
+        // Criamos o HTML dos cards (do mais recente para o mais antigo)
+        listaDiv.innerHTML = h.map((e, i) => `
+            <div class="card" onclick="storage.load(${i})" style="cursor:pointer">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <b>${e.ref}</b>
+                    <span style="font-size:10px; color:var(--muted)">${e.data}</span>
+                </div>
+                <small style="color:var(--muted); display:block; margin-top:5px;">
+                    ${e.obs.substring(0, 40)}${e.obs.length > 40 ? '...' : ''}
+                </small>
             </div>
-        `).reverse().join('') || "Nenhum estudo.";
+        `).reverse().join('');
     },
+
+    // 3. CARREGAR ESTUDO ANTIGO
     load(i) {
         const h = JSON.parse(localStorage.getItem('edb_v5') || '[]');
         const e = h[i];
-        document.getElementById('ref').value = e.ref;
-        document.getElementById('obs').value = e.obs;
-        document.getElementById('int').value = e.int;
-        document.getElementById('fer').value = e.fer;
-        document.getElementById('apl').value = e.apl;
-        app.nav('p-caderno', document.querySelector('.nav-item'), 'Caderno');
-    }
-    buscarNoHistorico() {
-        // Pega o termo digitado
-        let filter = document.getElementById('search-hist').value.toLowerCase();
-        // Pega todos os cards de dentro da lista de histórico
-        let cards = document.querySelector('#lista-hist').querySelectorAll('.card');
 
-        cards.forEach(card => {
-            // Verifica se o texto do card (Referência ou Data) contém o filtro
-            let texto = card.innerText.toLowerCase();
-            if (texto.includes(filter)) {
-                card.style.display = ""; // Mostra
-            } else {
-                card.style.display = "none"; // Esconde
-            }
-        });
+        if(confirm(`Deseja carregar o estudo "${e.ref}"? Isso substituirá o texto atual do caderno.`)) {
+            document.getElementById('ref').value = e.ref;
+            document.getElementById('obs').value = e.obs;
+            document.getElementById('int').value = e.int;
+            document.getElementById('fer').value = e.fer;
+            document.getElementById('apl').value = e.apl;
+            
+            // Volta para a aba de anotação automaticamente
+            app.nav('p-caderno', document.querySelector('.nav-item'), 'Caderno');
+        }
     },
 
-    // Garanta que a função render() limpe a busca ao ser chamada
-    render() {
-        const h = JSON.parse(localStorage.getItem('edb_v5') || '[]');
-        const lista = document.getElementById('lista-hist');
-        
-        lista.innerHTML = h.map((e, i) => `
-            <div class="card" onclick="storage.load(${i})">
-                <b>${e.ref}</b><br><small>${e.data}</small>
-            </div>
-        `).reverse().join('') || "Nenhum estudo encontrado.";
-        
-        // Limpa o campo de busca se ele existir
-        const searchInput = document.getElementById('search-hist');
-        if(searchInput) searchInput.value = "";
+    // 4. BUSCA GLOBAL NO HISTÓRICO
+    buscarNoHistorico() {
+        const filter = document.getElementById('search-hist').value.toLowerCase();
+        const cards = document.getElementById('lista-hist').querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const texto = card.innerText.toLowerCase();
+            card.style.display = texto.includes(filter) ? "" : "none";
+        });
     }
 };
-window.onload = () => storage.render();
+
+// ESSENCIAL: Carrega o histórico assim que a página abre
+window.addEventListener('DOMContentLoaded', () => {
+    storage.render();
+});
