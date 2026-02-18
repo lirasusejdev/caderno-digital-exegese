@@ -16,7 +16,7 @@ const exporter = {
 
     downloadApostila() {
     // 1. O caminho deve ser IGUAL ao nome do arquivo na pasta
-    const caminhoArquivo = 'assets/intensivo-edb.pdf'; 
+    const caminhoArquivo = 'assets/Intensivo_Como_Estudar_a_Biblia.pdf'; 
     
     const link = document.createElement('a');
     link.href = caminhoArquivo;
